@@ -25,7 +25,8 @@ const blogSchema = new Schema({
   },
   coverImage: {
     type: String,
-    default: null
+    default: null,
+    required: true
   },
   published: {
     type: Boolean,

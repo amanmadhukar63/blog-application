@@ -12,15 +12,14 @@ import { authenticateToken } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.route("/").get(getAllBlogs);
-
-router.route("/:id").get(getBlogById);
-
-router.route("/").post(authenticateToken, createBlog);
+router.route("/")
+  .get(getAllBlogs)
+  .post(authenticateToken, createBlog);
 
 router.route("/my-blogs").get(authenticateToken, getMyBlogs);
 
 router.route("/:id")
+  .get(getBlogById)
   .put(authenticateToken, updateBlog)
   .delete(authenticateToken, deleteBlog);
 
