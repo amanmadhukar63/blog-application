@@ -12,7 +12,6 @@ async function signup(req, res) {
   try {
     const { fullname, email, password } = req.body;
 
-    // Validation
     if (!fullname || !email || !password) {
       return responseHandler(res, {
         msg: "All fields are required",
@@ -49,7 +48,6 @@ async function signup(req, res) {
       });
     }
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email: email.toLowerCase() });
     if (existingUser) {
       return responseHandler(res, {
@@ -60,17 +58,14 @@ async function signup(req, res) {
       });
     }
 
-    // Create new user
     const user = await User.create({
       fullname: fullname.trim(),
       email: email.toLowerCase().trim(),
       password
     });
 
-    // Generate JWT token
     const token = generateToken(user._id);
 
-    // Return success response with token
     return responseHandler(res, {
       msg: "User registered successfully",
       status: "success",

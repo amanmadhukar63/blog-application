@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
+import blogRouter from './routes/blog.route.js';
 
 dotenv.config();
 const app = express();
@@ -14,5 +15,7 @@ const corsOptions = {
 app.use(express.json({limit: "16kb"}));
 
 app.use('/auth', userRouter);
+
+app.use('/blogs', blogRouter);
 
 export default app;
