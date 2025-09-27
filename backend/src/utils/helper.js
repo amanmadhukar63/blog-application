@@ -36,7 +36,7 @@ const validateFullname = (fullname) => {
 };
 
 const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
+  return jwt.sign({ userId }, process.env.JWT_SECRET , {
     expiresIn: '24h'
   });
 };
@@ -49,11 +49,26 @@ const clearToken = (res) => {
   });
 };
 
+const validateBlogTitle = (title) => {
+  return title && title.trim().length >= 3 && title.trim().length <= 200;
+};
+
+const validateBlogDescription = (description) => {
+  return description && description.trim().length >= 10 && description.trim().length <= 100;
+};
+
+const validateBlogContent = (content) => {
+  return content && content.trim().length >= 50;
+};
+
 export {
   responseHandler,
   validateEmail,
   validatePassword,
   validateFullname,
   generateToken,
-  clearToken
+  clearToken,
+  validateBlogTitle,
+  validateBlogDescription,
+  validateBlogContent
 };
