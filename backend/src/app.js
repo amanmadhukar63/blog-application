@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
 import blogRouter from './routes/blog.route.js';
@@ -13,6 +14,8 @@ const corsOptions = {
 };
 
 app.use(express.json({limit: "16kb"}));
+
+app.use(cookieParser());
 
 app.use('/auth', userRouter);
 
