@@ -1,11 +1,29 @@
 import { Router } from "express";
+import {
+  createBlog,
+  getAllBlogs,
+  getBlogById,
+  updateBlog,
+  deleteBlog,
+  getMyBlogs,
+  togglePublishStatus
+} from "../controllers/blog.controller.js";
+import { authenticateToken } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.route("/").get();
-router.route("/:id").get();
-router.route("/create").post();
-router.route("/:id").put();
-router.route("/:id").delete();
+router.route("/").get(getAllBlogs);
+
+router.route("/:id").get(getBlogById);
+
+router.route("/").post(authenticateToken, createBlog);
+
+router.route("/my-blogs").get(authenticateToken, getMyBlogs);
+
+router.route("/:id")
+  .put(authenticateToken, updateBlog)
+  .delete(authenticateToken, deleteBlog);
+
+router.route("/:id/toggle-publish").patch(authenticateToken, togglePublishStatus);
 
 export default router;
