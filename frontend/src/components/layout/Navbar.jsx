@@ -1,17 +1,38 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
 import { Sun, Moon, User, LogOut, BookOpen, Edit3, Menu, X } from 'lucide-react';
 import Button from '../ui/Button';
 import AuthModal from './AuthModal';
+import { showToast } from '../../utils/helpers';
+import { useGlobalContext } from '../../context/GlobalContext';
 
 const Navbar = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const { user, isAuthenticated } = useGlobalContext();
+
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    try {
+      const result = await logout();
+
+      if(result.status === 'success') {
+        navigate('/');
+      }
+
+      showToast(result.msg, result.status);
+
+    } catch (error) {
+      showToast('Logout Failed, Try Again', 'error');
+    }
+  }
 
   return (
     <>
@@ -91,7 +112,7 @@ const Navbar = () => {
                     <div className="absolute right-0 mt-2 w-48 bg-background border border-border rounded-md shadow-lg z-50">
                       <div className="py-1">
                         <div className="px-4 py-2 text-sm text-muted-foreground border-b border-border">
-                          {user?.fullName || user?.email}
+                          {user?.fullname || user?.email}
                         </div>
                         <button
                           className="flex items-center w-full px-4 py-2 text-sm hover:bg-accent"
@@ -107,6 +128,7 @@ const Navbar = () => {
                         </button>
                         <button
                           className="flex items-center w-full px-4 py-2 text-sm hover:bg-accent text-destructive"
+                          onClick={handleLogout}
                         >
                           <LogOut className="h-4 w-4 mr-2" />
                           Logout
