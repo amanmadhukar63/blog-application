@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 
 export const truncateText = (text, maxLength = 120) => {
   if (!text || text.length <= maxLength) return text;
@@ -37,3 +38,21 @@ export const getInitials = (name) => {
     .toUpperCase()
     .substring(0, 2);
 };
+
+export const showToast = (msg, status) => {
+  if(status === 'success') toast.success(msg);
+  else toast.error(msg);
+}
+
+export const setLocalStorage = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+export const getLocalStorage = (key) => {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  } catch (error) {
+    return null;
+  }
+}
