@@ -20,7 +20,7 @@ const CardDescription = ({ className = '', ...props }) => (
 );
 
 const CardContent = ({ className = '', ...props }) => (
-  <div className={`p-6 pt-0 ${className}`} {...props} />
+  <div className={`p-6 ${className}`} {...props} />
 );
 
 const CardFooter = ({ className = '', ...props }) => (
