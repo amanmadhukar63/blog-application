@@ -1,6 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import userRouter from './routes/user.route.js';
 import blogRouter from './routes/blog.route.js';
 import uploadRouter from './routes/upload.route.js';
@@ -10,7 +11,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: ["*"],
+  origin: ["http://localhost:5173"],
   headers: ["Content-Type"],
   credentials: true,
 };
@@ -22,6 +23,8 @@ cloudinary.config({
 });
 
 app.use(express.json({limit: "16kb"}));
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
