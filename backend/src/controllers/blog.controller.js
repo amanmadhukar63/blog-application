@@ -106,7 +106,7 @@ export const getAllBlogs = async (req, res) => {
       .limit(limit)
       .lean();
 
-    const totalBlogs = await Blog.countDocuments(query);
+    const totalBlogs = await Blog.countDocuments({published: true});
     const totalPages = Math.ceil(totalBlogs / limit);
 
     return responseHandler(res, {
