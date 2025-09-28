@@ -14,13 +14,6 @@ export const formatDate = (dateString) => {
   });
 };
 
-export const formatReadTime = (content) => {
-  const wordsPerMinute = 200;
-  const wordCount = content.split(/\s+/).length;
-  const readTime = Math.ceil(wordCount / wordsPerMinute);
-  return `${readTime} min read`;
-};
-
 export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
