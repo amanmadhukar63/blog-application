@@ -12,9 +12,9 @@ import { authenticateToken } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-router.route("/")
-  .get(getAllBlogs)
-  .post(authenticateToken, createBlog);
+router.route("/").post(authenticateToken, createBlog);
+router.route("/all").post(getAllBlogs);
+  
 
 router.route("/my-blogs").get(authenticateToken, getMyBlogs);
 
