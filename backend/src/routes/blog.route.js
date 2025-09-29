@@ -23,6 +23,6 @@ router.route("/:id")
   .put(authenticateToken, updateBlog)
   .delete(authenticateToken, deleteBlog);
 
-router.route("/:id/toggle-publish").patch(authenticateToken, togglePublishStatus);
+router.route("/toggle-publish/:id").patch(authenticateToken, togglePublishStatus);
 
 export default router;
