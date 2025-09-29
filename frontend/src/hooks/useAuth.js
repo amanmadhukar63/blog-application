@@ -38,6 +38,7 @@ export const useAuth = () => {
       if(data.status === 'success') {
         setUser(data.data.user);
         setLocalStorage('user', data.data.user);
+        setLocalStorage('token', data.token);
       }
 
       return data;
@@ -90,6 +91,7 @@ export const useAuth = () => {
       if(data.status === 'success') {
         setUser(data.data.user);
         setLocalStorage('user', data.data.user);
+        setLocalStorage('token', data.token);
       }
 
       return data;
@@ -106,23 +108,14 @@ export const useAuth = () => {
   const logout = async () => {
     try {
 
-      const response = await fetch(
-        `${API_BASE_URL}/auth/logout`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-      const data = await response.json();
-      
-      if(data.status === 'success') {
-        setUser(null);
-        localStorage.removeItem('user');
-      }
+      setUser(null);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
 
-      return data;
+      return {
+        status: 'success',
+        msg: 'Logged out successfully.'
+      };
 
     } catch (error) {
       return {

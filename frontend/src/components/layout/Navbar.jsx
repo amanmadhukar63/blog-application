@@ -25,6 +25,7 @@ const Navbar = () => {
 
       if(result.status === 'success') {
         navigate('/');
+        setIsUserMenuOpen(false);
       }
 
       showToast(result.msg, result.status);
