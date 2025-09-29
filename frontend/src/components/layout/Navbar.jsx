@@ -14,6 +14,7 @@ const Navbar = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
 
   const { user, isAuthenticated } = useGlobalContext();
 
@@ -38,6 +39,12 @@ const Navbar = () => {
   return (
     <>
       <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
+        {showInfo && (
+          <div className='px-4 text-foreground/60 text-sm bg-yellow-100 flex justify-between items-center'>
+            <p className='text-black'>The first request may take a few moments to respond, due to backend inactivity.</p>
+            <button onClick={() => setShowInfo(false)} className='p-2 hover:bg-yellow-200 rounded-md'>x</button>
+          </div>
+        )}
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className='flex items-center space-x-2'>
@@ -117,15 +124,21 @@ const Navbar = () => {
                         </div>
                         <button
                           className="flex items-center w-full px-4 py-2 text-sm hover:bg-accent"
+                          onClick={() => setIsUserMenuOpen(false)}
                         >
-                          <BookOpen className="h-4 w-4 mr-2" />
-                          My Blogs
+                          <Link to="/my-blogs" className='flex items-center'>
+                            <BookOpen className="h-4 w-4 mr-2" />
+                            My Blogs
+                          </Link>
                         </button>
                         <button
                           className="flex items-center w-full px-4 py-2 text-sm hover:bg-accent"
+                          onClick={() => setIsUserMenuOpen(false)}
                         >
-                          <Edit3 className="h-4 w-4 mr-2" />
-                          Create Blog
+                          <Link to="/create-blog" className='flex items-center'>
+                            <Edit3 className="h-4 w-4 mr-2" />
+                            Create Blog
+                          </Link>
                         </button>
                         <button
                           className="flex items-center w-full px-4 py-2 text-sm hover:bg-accent text-destructive"
