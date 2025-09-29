@@ -12,7 +12,7 @@ const app = express();
 
 const corsOptions = {
   origin: '*',
-  headers: ["Content-Type"],
+  headers: ["Content-Type", "authorization"],
   credentials: true,
 };
 

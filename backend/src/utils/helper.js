@@ -11,12 +11,7 @@ function responseHandler(res, {msg, status, statusCode, data = null, error = nul
   }
   
   if (token) {
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000
-    });
+    responseObj.token = token;
   }
   
   return res.status(statusCode).json(responseObj);

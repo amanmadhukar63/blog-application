@@ -5,7 +5,7 @@ import { responseHandler } from '../utils/helper.js';
 export const authenticateToken = async (req, res, next) => {
   try {
 
-    let token = req.cookies.token;
+    let token = req.headers["authorization"]?.split(" ")?.[1];
 
     if (!token) {
       return responseHandler(res, {
