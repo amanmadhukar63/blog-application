@@ -83,7 +83,11 @@ export const useAuth = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ fullName, email, password })
+          body: JSON.stringify({ 
+            fullname: fullName,
+            email,
+            password 
+          })
         }
       );
       const data = await response.json();
