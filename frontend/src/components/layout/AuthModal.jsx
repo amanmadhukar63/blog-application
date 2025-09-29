@@ -32,7 +32,7 @@ const AuthModal = ({ isOpen, onClose }) => {
       if (isLogin) {
         result = await login(formData.email, formData.password);
       } else {
-        result = await signup(formData.email, formData.password, formData.fullName);
+        result = await signup(formData.fullName, formData.email, formData.password);
       }
 
       showToast(result.msg, result.status);
