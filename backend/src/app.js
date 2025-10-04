@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: '*',
+  origin: 'https://blog-aman-app.vercel.app',
   headers: ["Content-Type", "authorization"],
   credentials: true,
 };
