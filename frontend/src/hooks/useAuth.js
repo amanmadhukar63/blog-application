@@ -1,4 +1,4 @@
-import { setLocalStorage, validateEmail, validatePassword } from '../utils/helpers.js';
+import { getLocalStorage, setLocalStorage, validateEmail, validatePassword } from '../utils/helpers.js';
 import { API_BASE_URL } from '../utils/config.js';
 import { useGlobalContext } from '../context/GlobalContext.jsx';
 
@@ -109,6 +109,41 @@ export const useAuth = () => {
     }
   };
 
+  const verifyToken = async () => {
+    try {
+
+      const response = await fetch(
+        `${API_BASE_URL}/auth/verifyToken`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${getLocalStorage('token')}`
+          }
+        }
+      );
+      const data = await response.json();
+
+      if(data.status === 'error') {
+        await logout();
+        return {
+          status: 'error',
+          msg: 'Verification failed. Please Login'
+        };
+      }
+
+      return data;
+      
+    } catch (error) {
+      console.error('Verification error:', error);
+      await logout();
+      return {
+        status: 'error',
+        msg: 'Verification failed. Please Login'
+      }
+    }
+  };
+
   const logout = async () => {
     try {
 
@@ -132,7 +167,8 @@ export const useAuth = () => {
   return {
     login,
     signup,
-    logout
+    logout,
+    verifyToken
   };
 };
 

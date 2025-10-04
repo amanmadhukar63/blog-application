@@ -36,14 +36,6 @@ const generateToken = (userId) => {
   });
 };
 
-const clearToken = (res) => {
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict'
-  });
-};
-
 const validateBlogTitle = (title) => {
   return title && title.trim().length >= 3 && title.trim().length <= 200;
 };
@@ -62,7 +54,6 @@ export {
   validatePassword,
   validateFullname,
   generateToken,
-  clearToken,
   validateBlogTitle,
   validateBlogDescription,
   validateBlogContent

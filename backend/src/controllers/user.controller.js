@@ -4,8 +4,7 @@ import {
   validateEmail, 
   validatePassword, 
   validateFullname, 
-  generateToken, 
-  clearToken 
+  generateToken
 } from "../utils/helper.js";
 
 async function signup(req, res) {
@@ -167,8 +166,6 @@ async function login(req, res) {
 
 async function logout(req, res) {
   try {
-    // Clear the JWT token cookie
-    clearToken(res);
     
     return responseHandler(res, {
       msg: "Logout successful",
@@ -190,8 +187,32 @@ async function logout(req, res) {
   }
 }
 
+async function verifyToken(req, res) {
+  try {
+    
+    return responseHandler(res, {
+      msg: "Token verified successful",
+      status: "success",
+      statusCode: 200,
+      data: {
+        message: "Token is valid"
+      }
+    });
+
+  } catch (error) {
+    console.error("Token verification error:", error);
+    return responseHandler(res, {
+      msg: "Internal server error",
+      status: "error",
+      statusCode: 500,
+      error: "Something went wrong during verification"
+    });
+  }
+}
+
 export {
   login,
   signup,
-  logout
+  logout,
+  verifyToken
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
@@ -9,7 +9,7 @@ import { showToast } from '../../utils/helpers';
 import { useGlobalContext } from '../../context/GlobalContext';
 
 const Navbar = () => {
-  const { logout } = useAuth();
+  const { logout, verifyToken } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -19,6 +19,14 @@ const Navbar = () => {
   const { user, isAuthenticated } = useGlobalContext();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    (async ()=>{
+      if(isAuthenticated) {
+        await verifyToken();
+      }
+    })();
+  }, [isAuthenticated]);
 
   async function handleLogout() {
     try {
@@ -41,8 +49,8 @@ const Navbar = () => {
       <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
         {showInfo && (
           <div className='px-4 text-foreground/60 text-sm bg-yellow-100 flex justify-between items-center'>
-            <p className='text-black'>The first request may take a few moments to respond, due to backend inactivity.</p>
-            <button onClick={() => setShowInfo(false)} className='p-2 hover:bg-yellow-200 rounded-md'>x</button>
+            <p className='text-black'>The first request to backend may take a few moments to respond, due to backend inactivity.</p>
+            <button onClick={() => setShowInfo(false)} className='p-2 hover:bg-yellow-200 text-red-500 rounded-md'>x</button>
           </div>
         )}
         <div className="container mx-auto px-4">
@@ -205,13 +213,6 @@ const Navbar = () => {
         <div 
           className="fixed inset-0 z-30" 
           onClick={() => setIsUserMenuOpen(false)}
-        />
-      )}
-
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 z-30 md:hidden" 
-          onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
     </>
