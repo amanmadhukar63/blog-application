@@ -131,7 +131,7 @@ const BlogDetail = () => {
             </div>
             <div>
               <h3 className="font-semibold">{blog.author.fullname}</h3>
-              <p className="text-muted-foreground">Blog Author</p>
+              <p className="text-muted-foreground">Author</p>
             </div>
           </div>
         </CardContent>
