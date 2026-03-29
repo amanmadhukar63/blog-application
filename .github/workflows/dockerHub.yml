@@ -28,3 +28,13 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
+
+      - name: Build Backend Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/backend:${{ github.sha }} ./backend
+          docker tag ${{ secrets.DOCKER_USERNAME }}/backend:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/backend:latest
+
+      - name: Push Backend Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/backend:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/backend:latest
